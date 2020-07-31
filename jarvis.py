@@ -103,13 +103,13 @@ if __name__ == "__main__":
             codePath = "C:\\Users\\Mk\\AppData\\Local\\Programs\\Python\\Python37-32\\pythonw.exe "
             os.startfile(codePath)
 
-        elif 'email to harry' in query:
+        elif 'email to mithun' in query:
             try:
                 speak("What should I say?")
                 content = takeCommand()
-                to = "harryyourEmail@gmail.com"
+                to = "mithun@gmail.com"
                 sendEmail(to, content)
                 speak("Email has been sent!")
             except Exception as e:
                 print(e)
-                speak("Sorry my friend harry bhai. I am not able to send this email")
+                speak("Sorry my friend mithun. I am not able to send this email")
