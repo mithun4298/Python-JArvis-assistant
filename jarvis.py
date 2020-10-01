@@ -6,6 +6,9 @@ import webbrowser
 import os
 import smtplib
 import random
+from googlesearch import *
+import requests
+import json
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -60,6 +63,21 @@ def sendEmail(to, content):
     server.login('youremail@gmail.com', 'your-password')
     server.sendmail('youremail@gmail.com', to, content)
     server.close()
+    
+def readNews():
+    speak("Today's Headlines.:")
+    url="http://newsapi.org/v2/top-headlines?country=in&apiKey=xxxxxxxxxxxxxxxxxxxxxxxx"    #Modify with your own api key here
+    news=requests.get(url).text
+    news_json=json.loads(news)
+    articles=news_json.get('articles')
+    for article in articles:
+        speak(article.get("title"))
+        speak("Moving to next news")
+        
+def googleSearch(query):
+    chrome_path = r'C:\\Program Files (x86)\\Google\\Chrome\\Application %s'
+    for url in search(query, tld="co.in", num=1, stop = 1, pause = 2):
+        webbrowser.open("https://google.com/search?q=%s" % query)
 
 if __name__ == "__main__":
     wishMe()
@@ -102,6 +120,9 @@ if __name__ == "__main__":
         elif 'open python' in query:
             codePath = "C:\\Users\\Mk\\AppData\\Local\\Programs\\Python\\Python37-32\\pythonw.exe "
             os.startfile(codePath)
+            
+        elif "news" in query:
+            readNews()
 
         elif 'email to mithun' in query:
             try:
@@ -113,3 +134,6 @@ if __name__ == "__main__":
             except Exception as e:
                 print(e)
                 speak("Sorry my friend mithun. I am not able to send this email")
+        else:
+            googleSearch(query)
+                
